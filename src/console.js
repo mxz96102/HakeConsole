@@ -42,7 +42,7 @@ function __toString(target, isDeep) {
   return '';
 }
 
-let num = 0;
+let num = 0, __prefix = 1, timeSpace = {};
 
 export default class FakeConsole {
   constructor(realConsole, injectElement) {
@@ -51,44 +51,86 @@ export default class FakeConsole {
   }
 
   __out(type, content, num) {
-    this.injectElement.innerHTML += ` [${type}] ${num} :<br/> ${content} <br />` ;
+    let prefix = BLANK_SPACE.repeat(__prefix * 2 - 2);
+
+    this.injectElement.innerHTML += `${prefix}[${type}] ${num} :<br/> ${content} <br />` ;
     this.injectElement.scrollTop = this.injectElement.scrollHeight;
   }
-  assert() {}
-  clear() {}
-  debug() {}
+  assert() {
+    if(!arguments[0]) {
+      let call = [];
+
+      for (let i = 0; i < arguments.length; i++) {
+        call.push(arguments[i]);
+      }
+      this.error.apply(this, call);
+    }
+  }
+  clear() {
+    this.injectElement.innerHTML = '';
+  }
+  debug() {
+    this.log.apply(this, arguments);
+  }
   error() {
     for (let i = 0; i < arguments.length; i++) {
-      this.__out('log', __toString(arguments[i]), ++num);
+      this.__out('xerrorx', __toString(arguments[i]), ++num);
     }
     try{
-      this.real.error.call(arguments);
+      this.real.error.apply(window, arguments);
     } catch (e) {
       this.real.log(e);
     }
   }
-  group() {}
-  groupCollapsed() {}
-  info() {}
+  group() {
+    __prefix = __prefix > 6 ? 5 : __prefix + 1;
+    this.log.apply(this, arguments);
+  }
+  groupCollapsed() {
+    this.group.apply(this, arguments);
+  }
+  groupEnd() {
+    __prefix = __prefix - 1 || 0;
+    this.log.apply(this, arguments);
+  }
+  info() {
+    this.log.apply(this, arguments);
+  }
   log() {
     for (let i = 0; i < arguments.length; i++) {
       this.__out('log', __toString(arguments[i]), ++num);
     }
     try{
-      this.real.log.call(arguments);
+      this.real.log.apply(window, arguments);
     } catch (e) {
       this.real.log(e);
     }
   }
-  time() {}
-  timeEnd() {}
-  trace() {}
+  time() {
+    try{
+      timeSpace[arguments[0]] = (new Date()).getTime();
+    } catch (e) {
+      this.real.log(e);
+    }
+  }
+  timeEnd() {
+    let end = (new Date()).getTime();
+
+    try{
+      this.__out('time', (end - timeSpace[arguments[0]]) + 'ms', ++num);
+    } catch (e) {
+      this.real.log(e);
+    }
+  }
+  trace() {
+    this.real.trace.apply(window, arguments);
+  }
   warn() {
     for (let i = 0; i < arguments.length; i++) {
-      this.__out('log', __toString(arguments[i]), ++num);
+      this.__out('!warn!', __toString(arguments[i]), ++num);
     }
     try{
-      this.real.warn.call(arguments);
+      this.real.warn.apply(window, arguments);
     } catch (e) {
       this.real.log(e);
     }

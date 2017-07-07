@@ -15,3 +15,9 @@ to use
 new HakeConsole();
 ```
 it will start;
+
+# TODO List
+
+- Complete console function
+- Add input
+- ... ...

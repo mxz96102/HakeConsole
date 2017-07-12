@@ -14,10 +14,35 @@ to use
 ``` Javascript
 new HakeConsole();
 ```
-it will start;
+check the square to start check information or may execute some command;
 
-# TODO List
+## Console function
+> It's not recommand to use function that we not support.
 
-- Complete console function
-- Add input
+- assert
+- clear
+- debug
+- error
+- group
+- groupEnd
+- info
+- log
+- time
+- timeEnd
+- trace
+- warn
+
+## Custumize Console
+> TODO
+
+- inject elements
+- function
+- onload function
+
+## TODO List
+- add style to different style of information.
+- custumize console
+- support some feature for mobile.
+- add variable listener and display on screen.
+- may use better way to input.
 - ... ...

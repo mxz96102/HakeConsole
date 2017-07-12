@@ -1,7 +1,7 @@
 {
-  "name": "webpack-library-starter",
-  "version": "0.3.0",
-  "description": "Produce universal library with webpack and es6",
+  "name": "hack-console",
+  "version": "0.1.0",
+  "description": "A console used on mobile browser to devolop.",
   "main": "lib/HakeConsole.js",
   "scripts": {
     "build": "webpack --env build",
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/mxz96102/HakeConsole"
   },
   "keywords": [
     "webpack",
@@ -39,10 +39,8 @@
   "author": "Dominic Ming",
   "license": "MIT",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/mxz96102/HakeConsole/issues"
   },
-  "homepage": "",
-  "dependencies": {
-    "babel-polyfill": "^6.23.0"
-  }
+  "homepage": "https://github.com/mxz96102/HakeConsole",
+  "dependencies": {}
 }

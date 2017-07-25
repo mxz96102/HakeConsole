@@ -67,6 +67,18 @@ export default class ConsoleElements {
     this.button.onclick = ()=>{
       __this.screen.style.display = __this.screen.style.display === 'none' ? '' : 'none';
       __this.input.style.display = __this.input.style.display === 'none' ? '' : 'none';
+      let result;
+
+      try {
+        result = Function('return ' + __this.input.target.value)();
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+      if(result !== undefined) {
+        console.log(result);
+      }
+      __this.input.target.value = '';
     };
     this.input.onchange = e => {
       let result;
